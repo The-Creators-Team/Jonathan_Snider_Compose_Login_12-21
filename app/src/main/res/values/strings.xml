@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">JonathanSniderLoginTesting</string>
+    <string name="login_button">Login</string>
+    <string name="email_text_field">Email</string>
+    <string name="register_button">Register</string>
+    <string name="password_text_field">Password</string>
+    <string name="register_email_text_field">New Email</string>
+    <string name="register_password_text_field">New Password</string>
+    <string name="create_account_button">Create New Account</string>
+    <string name="login_greeting">Hello! Enter your email and password below to login</string>
 </resources>
