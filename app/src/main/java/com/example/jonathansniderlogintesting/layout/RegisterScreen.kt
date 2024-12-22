@@ -157,7 +157,7 @@ fun RegisterScreen(
                     modifier = Modifier.padding(10.dp)
 
                 )
-                //login button, move to home screen after SUCCESSFUL login
+                //register button, move back to login after SUCCESSFUL register
                 Button(
                     onClick = {
 

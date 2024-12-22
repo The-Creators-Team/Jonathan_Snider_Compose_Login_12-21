@@ -27,21 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigation.findNavController
-import com.example.jonathansniderlogintesting.MainActivity
-import com.example.jonathansniderlogintesting.MoveToRegisterScreen
 import com.example.jonathansniderlogintesting.R
-import com.example.jonathansniderlogintesting.ScreenB
+import com.example.jonathansniderlogintesting.RegisterScreenRoute
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 //@Preview(showBackground = true)
 @Composable
@@ -124,10 +114,7 @@ fun LoginScreen(
                         Toast.makeText(context, "hit the register button", Toast.LENGTH_SHORT)
                             .show()
                         navController.navigate(
-                            ScreenB(
-                                name = "Billy",
-                                age = 25
-                            )
+                            RegisterScreenRoute
                         )
                     },
                     modifier = Modifier
@@ -141,22 +128,21 @@ fun LoginScreen(
     }
 }
 
+
 private fun verifyFirebaseUser(
     email: String,
     password: String,
     auth: FirebaseAuth,
     context: Context,
     navController: NavController
-) {
+){
     auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
         if (task.isSuccessful) {
             val user = auth.currentUser
             Toast.makeText(context, "Good Login by ${user?.email}", Toast.LENGTH_LONG).show()
-            navController.navigate(
-                MoveToRegisterScreen
-            )
+            //navigate to home screen
+            //navController.navigate()
 
-            //navigate to Home Page
         } else {
             Toast.makeText(context, "Bad Login: ${task.exception?.message}", Toast.LENGTH_LONG)
                 .show()

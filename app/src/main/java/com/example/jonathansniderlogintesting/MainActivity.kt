@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                                 Text(text="welcome to screen B, ${args.name}, ${args.age} years old")
                         }
                     }
-                    composable<RegisterScreen> {
+                    composable<RegisterScreenRoute> {
                         RegisterScreen(auth, navController)
                     }
                 }
@@ -82,6 +82,6 @@ data class ScreenB(
 )
 
 @Serializable
-object RegisterScreen
+object RegisterScreenRoute
 
 
