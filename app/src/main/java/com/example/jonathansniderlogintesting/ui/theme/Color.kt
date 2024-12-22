@@ -9,3 +9,8 @@ val Pink80 = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
+
+val OldNationalBlue = Color(0xFF065195)
+val OldNationalYellow = Color(0xFFF5BB2A)
+val OldNationalBlueLight = Color(0xFF3C96EC)
+

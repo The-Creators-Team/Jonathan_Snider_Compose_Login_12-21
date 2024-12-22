@@ -21,24 +21,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.jonathansniderlogintesting.R
 import com.example.jonathansniderlogintesting.RegisterScreenRoute
 import com.google.firebase.auth.FirebaseAuth
 
-//@Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun LoginScreen(
     auth: FirebaseAuth,
     navController: NavController
 ) {
+
     val context = LocalContext.current
     Column(
 
@@ -141,7 +144,7 @@ private fun verifyFirebaseUser(
             val user = auth.currentUser
             Toast.makeText(context, "Good Login by ${user?.email}", Toast.LENGTH_LONG).show()
             //navigate to home screen
-            //navController.navigate()
+            //navController.navigate(HomeScreenRoute)
 
         } else {
             Toast.makeText(context, "Bad Login: ${task.exception?.message}", Toast.LENGTH_LONG)

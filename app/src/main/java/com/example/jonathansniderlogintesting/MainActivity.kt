@@ -8,7 +8,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -22,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.serialization.Serializable
+import kotlin.math.log
 
 class MainActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth;
@@ -29,26 +34,29 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-            //setting the content for the home page
+        //setting the content for the home page
         auth = Firebase.auth
+
         setContent {
             JonathanSniderLoginTestingTheme {
                 //creating (and remembering) the navController
                 //STATE HOIST THIS (HOWEVER THAT WORKS)
                 val navController = rememberNavController()
-
+                val loginAuth by remember { mutableStateOf(auth) }
                 NavHost(
                     navController = navController,
-                    startDestination = LoginScreen
+                    startDestination = LoginScreenRoute
                 ) {
                     //these K classes can be seen as routes and with the composable
                     //the applications will start at the one given as the start destination above,
                     // and by using the 'navController.navigate' button and giving a route as
                     //an argument, its possible to move in between screens
-                    composable<LoginScreen> {
-                        LoginScreen(auth, navController)
+                    composable<LoginScreenRoute> {
+
+                        LoginScreen(loginAuth, navController)
+                        //LoginScreen(auth, navController)
                     }
-                    composable<ScreenB> {
+                    /*composable<ScreenB> {
                         val args=it.toRoute<ScreenB>()
                         Column(
                             modifier = Modifier.fillMaxSize(),
@@ -57,9 +65,13 @@ class MainActivity : ComponentActivity() {
                         ) {
                                 Text(text="welcome to screen B, ${args.name}, ${args.age} years old")
                         }
+                    }*/
+                    composable<HomeScreenRoute> {
+
                     }
                     composable<RegisterScreenRoute> {
-                        RegisterScreen(auth, navController)
+                        RegisterScreen(loginAuth, navController)
+                        //RegisterScreen(auth, navController)
                     }
                 }
             }
@@ -73,7 +85,7 @@ class MainActivity : ComponentActivity() {
 //to resources themselves (such as an id that identifies a large object or what to pull for an
 //API call
 @Serializable
-object LoginScreen
+object LoginScreenRoute
 
 @Serializable
 data class ScreenB(
@@ -83,5 +95,8 @@ data class ScreenB(
 
 @Serializable
 object RegisterScreenRoute
+
+@Serializable
+object HomeScreenRoute
 
 

@@ -25,82 +25,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.jonathansniderlogintesting.LoginScreen
+import com.example.jonathansniderlogintesting.LoginScreenRoute
 import com.example.jonathansniderlogintesting.R
 import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
-/*fun RegisterScreen(
-
-) {
-    val context = LocalContext.current
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        var text by remember { mutableStateOf("") }
-        //email field
-        OutlinedTextField(
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedTextColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = MaterialTheme.colorScheme.primary,
-                unfocusedLeadingIconColor = MaterialTheme.colorScheme.primary
-            ),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
-            },
-            value = text,
-            onValueChange = { text = it },
-            label = { Text(stringResource(R.string.register_email_text_field)) },
-            modifier = Modifier.padding(10.dp)
-
-        )
-        //password field
-        OutlinedTextField(
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedTextColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = MaterialTheme.colorScheme.primary,
-                unfocusedLeadingIconColor = MaterialTheme.colorScheme.primary
-            ),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
-            },
-            value = text,
-            onValueChange = { text = it },
-            label = { Text(stringResource(R.string.new_password_text_field)) },
-            modifier = Modifier.padding(10.dp)
-
-        )
-        //register account button, move back to login screen after SUCCESSFUL register
-        Button(onClick = {
-            Toast.makeText(context, "hit the new account button", Toast.LENGTH_SHORT).show()
-        },
-            modifier = Modifier.padding(20.dp)) {
-            Text(text = stringResource(R.string.create_account_button))
-        }
-    }
-}*/
-
-
 fun RegisterScreen(
     auth: FirebaseAuth,
     navController: NavController
-)
-{
+) {
+    val context = LocalContext.current
     Column(
 
         verticalArrangement = Arrangement.Center,
@@ -116,7 +56,7 @@ fun RegisterScreen(
             Column(
             ) {
                 //new email field
-                var emailText by remember { mutableStateOf("") }
+                var newEmailText by remember { mutableStateOf("") }
                 OutlinedTextField(
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedTextColor = MaterialTheme.colorScheme.primary,
@@ -130,14 +70,14 @@ fun RegisterScreen(
                             contentDescription = null
                         )
                     },
-                    value = emailText,
-                    onValueChange = { emailText = it },
+                    value = newEmailText,
+                    onValueChange = { newEmailText = it },
                     label = { Text(stringResource(R.string.register_email_text_field)) },
                     modifier = Modifier.padding(10.dp)
 
                 )
                 //new password field
-                var passwordText by remember { mutableStateOf("") }
+                var newPasswordText by remember { mutableStateOf("") }
                 OutlinedTextField(
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedTextColor = MaterialTheme.colorScheme.primary,
@@ -151,8 +91,8 @@ fun RegisterScreen(
                             contentDescription = null
                         )
                     },
-                    value = passwordText,
-                    onValueChange = { passwordText = it },
+                    value = newPasswordText,
+                    onValueChange = { newPasswordText = it },
                     label = { Text(stringResource(R.string.register_password_text_field)) },
                     modifier = Modifier.padding(10.dp)
 
@@ -160,7 +100,12 @@ fun RegisterScreen(
                 //register button, move back to login after SUCCESSFUL register
                 Button(
                     onClick = {
-
+                        createNewFirebaseUser(
+                            newEmailText, newPasswordText,
+                            auth = auth,
+                            context = context,
+                            navController = navController
+                        )
                     },
                     modifier = Modifier
                         .padding(20.dp)
@@ -175,7 +120,13 @@ fun RegisterScreen(
     }
 }
 
-private fun createNewFirebaseUser(newEmail: String, newPassword: String, auth: FirebaseAuth, context: Context, navController: NavController) {
+private fun createNewFirebaseUser(
+    newEmail: String,
+    newPassword: String,
+    auth: FirebaseAuth,
+    context: Context,
+    navController: NavController
+) {
     auth.createUserWithEmailAndPassword(newEmail, newPassword)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -187,7 +138,7 @@ private fun createNewFirebaseUser(newEmail: String, newPassword: String, auth: F
                 auth.signOut()
                 //move back to login page
                 navController.navigate(
-                    LoginScreen
+                    LoginScreenRoute
                 )
 
             } else {
