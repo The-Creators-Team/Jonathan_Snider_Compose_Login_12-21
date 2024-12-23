@@ -22,8 +22,13 @@ import com.example.jonathansniderlogintesting.layout.RegisterScreen
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import junit.framework.TestCase.assertTrue
+import org.junit.After
+import org.junit.AfterClass
+import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
+
 
 class LoginScreenTests {
 
@@ -31,6 +36,42 @@ class LoginScreenTests {
     val composeTestRule = createComposeRule()
 
     val auth = Firebase.auth
+
+    @Before
+    //otherwise known as @BeforeEach in Junit 5
+    //this will run before each test
+    fun setUp() {
+        println("Setting up test environment")
+    }
+
+    companion object {
+        @BeforeClass//run before any test is run. This is normally reserved for
+        //methods or functions that require a lengthy/complicated startup,
+        //such as getting a connection to a database
+        @JvmStatic //because JUnit was originally a Java framework, this annotation
+        //helps JUnit recognize this function as a static method to run
+        fun setUpOnce(){
+            println("Doing initial setup")
+
+        }
+
+        @AfterClass//runs after all classes in the test are done. Much like
+        //before class, use this to shutdown anything that might be left open
+        //due to testing, such as the aforementioned database connection
+        @JvmStatic
+        fun tearDownOnce(){
+            println("Doing final teardown")
+        }
+    }
+
+    @After
+    //otherwise known as @AfterEach in Junit 5
+    //will run after each test
+    fun cleanCheck() {
+        println("Cleaning up test environment")
+    }
+
+
 
     @Test
     fun loginScreen_successfulStart() {
@@ -182,4 +223,6 @@ class LoginScreenTests {
 
 
     }
+
+
 }
