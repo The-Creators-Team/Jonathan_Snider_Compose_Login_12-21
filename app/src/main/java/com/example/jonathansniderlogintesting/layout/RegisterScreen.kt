@@ -97,6 +97,12 @@ fun RegisterScreen(
 
                 )
                 //register button, move back to login after SUCCESSFUL register
+                var enabledState by remember { mutableStateOf(true) }
+                if (newEmailText.isEmpty() || newPasswordText.isEmpty()) {
+                    enabledState = false
+                } else {
+                    enabledState = true
+                }
                 Button(
                     onClick = {
                         createNewFirebaseUser(
@@ -106,6 +112,7 @@ fun RegisterScreen(
                             navigateToLogin = navigateToLogin
                         )
                     },
+                    enabled = enabledState,
                     modifier = Modifier
                         .padding(20.dp)
                         .align(Alignment.CenterHorizontally)

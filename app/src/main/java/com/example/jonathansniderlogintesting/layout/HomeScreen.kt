@@ -36,7 +36,7 @@ fun HomeScreen() {
                 color = MaterialTheme.colorScheme.surfaceVariant,
 
             ) {
-                Text("Congratulations! You've logged in!")
+                Text("hello")
 
             }
         }

@@ -74,7 +74,7 @@ fun LoginScreen(
                 shape = MaterialTheme.shapes.medium
             ),
 
-        ) {
+            ) {
             Column(
             ) {
                 //email field
@@ -120,10 +120,23 @@ fun LoginScreen(
 
                 )
                 //login button, move to home screen after SUCCESSFUL login
+                var enabledState by remember { mutableStateOf(true) }
+                if (emailText.isEmpty() || passwordText.isEmpty()) {
+                    enabledState = false
+                } else {
+                    enabledState = true
+                }
                 Button(
                     onClick = {
-                        verifyFirebaseUser(emailText, passwordText, auth, context, navigateToHomeScreen)
+                        verifyFirebaseUser(
+                            emailText,
+                            passwordText,
+                            auth,
+                            context,
+                            navigateToHomeScreen
+                        )
                     },
+                    enabled = enabledState,
                     modifier = Modifier
                         .padding(20.dp)
                         .align(Alignment.CenterHorizontally)
