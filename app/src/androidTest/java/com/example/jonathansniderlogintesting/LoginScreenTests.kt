@@ -25,7 +25,7 @@ import junit.framework.TestCase.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
-class BasicComposeTest {
+class LoginScreenTests {
 
     @get:Rule
     val composeTestRule = createComposeRule()

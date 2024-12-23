@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,7 +51,12 @@ fun RegisterScreen(
     ) {
         Surface(
             shape = MaterialTheme.shapes.medium,
-            color = MaterialTheme.colorScheme.surfaceVariant
+            color = MaterialTheme.colorScheme.surfaceVariant,
+            modifier = Modifier.border(
+                5.dp,
+                MaterialTheme.colorScheme.secondary,
+                shape = MaterialTheme.shapes.medium
+            )
         ) {
             Column(
             ) {
