@@ -174,7 +174,7 @@ class BasicComposeTest {
 
         //wait for a bit to give authentication time to occur,
         //then test to see if we successfully navigated to the home screen page
-        //( has nothing on it but a text box saying 'hello'
+        //(has nothing on it but a text box saying 'hello')
         composeTestRule.waitUntil(10000) {
             composeTestRule.onNodeWithText("hello", ignoreCase = true)
                 .isDisplayed()
