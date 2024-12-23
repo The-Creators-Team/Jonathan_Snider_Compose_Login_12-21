@@ -13,6 +13,7 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+//Instrumented tests benefit/require a device to be emulated/connected
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
     @Test
