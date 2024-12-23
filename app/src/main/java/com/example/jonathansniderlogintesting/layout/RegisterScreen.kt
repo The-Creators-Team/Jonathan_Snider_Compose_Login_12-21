@@ -38,7 +38,7 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun RegisterScreen(
     auth: FirebaseAuth,
-    navController: NavController
+    navigateToLogin: () -> Unit
 ) {
     val context = LocalContext.current
     Column(
@@ -47,7 +47,6 @@ fun RegisterScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(R.color.teal_200))
     ) {
         Surface(
             shape = MaterialTheme.shapes.medium,
@@ -104,7 +103,7 @@ fun RegisterScreen(
                             newEmailText, newPasswordText,
                             auth = auth,
                             context = context,
-                            navController = navController
+                            navigateToLogin = navigateToLogin
                         )
                     },
                     modifier = Modifier
@@ -125,7 +124,7 @@ private fun createNewFirebaseUser(
     newPassword: String,
     auth: FirebaseAuth,
     context: Context,
-    navController: NavController
+    navigateToLogin: () -> Unit
 ) {
     auth.createUserWithEmailAndPassword(newEmail, newPassword)
         .addOnCompleteListener { task ->
@@ -137,9 +136,7 @@ private fun createNewFirebaseUser(
                     .show()
                 auth.signOut()
                 //move back to login page
-                navController.navigate(
-                    LoginScreenRoute
-                )
+                navigateToLogin()
 
             } else {
                 // If sign in fails, display a message to the user.

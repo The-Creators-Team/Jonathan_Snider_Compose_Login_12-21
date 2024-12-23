@@ -2,11 +2,14 @@ package com.example.jonathansniderlogintesting.layout
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MailOutline
@@ -27,19 +30,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.jonathansniderlogintesting.HomeScreenRoute
 import com.example.jonathansniderlogintesting.R
 import com.example.jonathansniderlogintesting.RegisterScreenRoute
 import com.google.firebase.auth.FirebaseAuth
 
-@Preview(showBackground = true)
+
 @Composable
 fun LoginScreen(
     auth: FirebaseAuth,
-    navController: NavController
+    navigateToRegister: () -> Unit,
+    navigateToHomeScreen: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -49,11 +55,25 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(R.color.teal_200))
-    ) {
+    )
+
+    {
+        Image(
+            painter = painterResource(id = R.drawable.old_national_logo),
+            contentDescription = null,
+            Modifier
+                .size(150.dp)
+                .padding(20.dp)
+        )
         Surface(
             shape = MaterialTheme.shapes.medium,
-            color = MaterialTheme.colorScheme.surfaceVariant
+            color = MaterialTheme.colorScheme.surfaceVariant,
+            modifier = Modifier.border(
+                5.dp,
+                MaterialTheme.colorScheme.secondary,
+                shape = MaterialTheme.shapes.medium
+            ),
+
         ) {
             Column(
             ) {
@@ -102,7 +122,7 @@ fun LoginScreen(
                 //login button, move to home screen after SUCCESSFUL login
                 Button(
                     onClick = {
-                        verifyFirebaseUser(emailText, passwordText, auth, context, navController)
+                        verifyFirebaseUser(emailText, passwordText, auth, context, navigateToHomeScreen)
                     },
                     modifier = Modifier
                         .padding(20.dp)
@@ -116,9 +136,8 @@ fun LoginScreen(
                     onClick = {
                         Toast.makeText(context, "hit the register button", Toast.LENGTH_SHORT)
                             .show()
-                        navController.navigate(
-                            RegisterScreenRoute
-                        )
+                        navigateToRegister()
+
                     },
                     modifier = Modifier
                         .padding(20.dp)
@@ -137,14 +156,14 @@ private fun verifyFirebaseUser(
     password: String,
     auth: FirebaseAuth,
     context: Context,
-    navController: NavController
-){
+    navigateToHomeScreen: () -> Unit
+) {
     auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
         if (task.isSuccessful) {
             val user = auth.currentUser
             Toast.makeText(context, "Good Login by ${user?.email}", Toast.LENGTH_LONG).show()
             //navigate to home screen
-            //navController.navigate(HomeScreenRoute)
+            navigateToHomeScreen()
 
         } else {
             Toast.makeText(context, "Bad Login: ${task.exception?.message}", Toast.LENGTH_LONG)

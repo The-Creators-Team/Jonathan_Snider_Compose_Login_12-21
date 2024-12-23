@@ -4,9 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,10 +18,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.example.jonathansniderlogintesting.layout.HomeScreen
 import com.example.jonathansniderlogintesting.layout.LoginScreen
 import com.example.jonathansniderlogintesting.layout.RegisterScreen
 import com.example.jonathansniderlogintesting.ui.theme.JonathanSniderLoginTestingTheme
@@ -42,10 +48,12 @@ class MainActivity : ComponentActivity() {
                 //creating (and remembering) the navController
                 //STATE HOIST THIS (HOWEVER THAT WORKS)
                 val navController = rememberNavController()
+
                 val loginAuth by remember { mutableStateOf(auth) }
                 NavHost(
                     navController = navController,
-                    startDestination = LoginScreenRoute
+                    startDestination = LoginScreenRoute,
+                    modifier = Modifier.background(MaterialTheme.colorScheme.primary)
                 ) {
                     //these K classes can be seen as routes and with the composable
                     //the applications will start at the one given as the start destination above,
@@ -53,8 +61,10 @@ class MainActivity : ComponentActivity() {
                     //an argument, its possible to move in between screens
                     composable<LoginScreenRoute> {
 
-                        LoginScreen(loginAuth, navController)
-                        //LoginScreen(auth, navController)
+                        LoginScreen(loginAuth,
+                            navigateToRegister = { navController.navigate(RegisterScreenRoute) },
+                            navigateToHomeScreen = {navController.navigate(HomeScreenRoute)}
+                            )
                     }
                     /*composable<ScreenB> {
                         val args=it.toRoute<ScreenB>()
@@ -67,11 +77,12 @@ class MainActivity : ComponentActivity() {
                         }
                     }*/
                     composable<HomeScreenRoute> {
+                        HomeScreen()
 
                     }
                     composable<RegisterScreenRoute> {
-                        RegisterScreen(loginAuth, navController)
-                        //RegisterScreen(auth, navController)
+                        RegisterScreen(loginAuth,
+                            navigateToLogin = {navController.navigate(LoginScreenRoute)})
                     }
                 }
             }
@@ -81,9 +92,9 @@ class MainActivity : ComponentActivity() {
 
 //think of these as ROUTES:
 //if data needs to be passed through the route, declare them as data classes instead
-//data sent this way should be lightweight and consist of an item to get large resources as opposed
+//data sent this way should be lightweight and consist of a pointer to get large resources as opposed
 //to resources themselves (such as an id that identifies a large object or what to pull for an
-//API call
+//API call)
 @Serializable
 object LoginScreenRoute
 

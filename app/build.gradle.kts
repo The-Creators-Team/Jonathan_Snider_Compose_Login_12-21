@@ -63,4 +63,14 @@ dependencies {
     //navigation with compose
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+
+    // Testing dependencies
+    androidTestImplementation (libs.androidx.core.testing)
+    androidTestImplementation (libs.androidx.espresso.contrib)
+    androidTestImplementation (libs.androidx.espresso.core)
+
+    // Compose testing dependencies
+    androidTestImplementation (libs.androidx.ui.test)
+    androidTestImplementation (libs.ui.test.junit4)
+    debugImplementation (libs.ui.test.manifest)
 }

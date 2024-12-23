@@ -12,9 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = OldNationalBlue,
+    secondary = OldNationalYellow,
+    tertiary = OldNationalBlueLight
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -37,7 +37,8 @@ private val LightColorScheme = lightColorScheme(
 fun JonathanSniderLoginTestingTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    //not sure why setting this to true messes with the colors
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
