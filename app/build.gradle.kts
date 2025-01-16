@@ -2,16 +2,18 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    //compose nav plugin
     alias(libs.plugins.kotlin.serialization)
+
     alias(libs.plugins.google.gms.google.services)
 }
 
 android {
-    namespace = "com.example.jonathansniderlogintesting"
+    namespace = "build.learning.jonathansniderlogintesting"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.jonathansniderlogintesting"
+        applicationId = "build.learning.jonathansniderlogintesting"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -22,7 +24,14 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type. Make sure to use a build
+            // variant with `isDebuggable=false`.
+            isMinifyEnabled = true
+
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -73,4 +82,8 @@ dependencies {
     androidTestImplementation (libs.androidx.ui.test)
     androidTestImplementation (libs.ui.test.junit4)
     debugImplementation (libs.ui.test.manifest)
+
+    //retrofit client
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter)
 }

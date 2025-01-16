@@ -1,4 +1,4 @@
-package com.example.jonathansniderlogintesting
+package build.learning.jonathansniderlogintesting
 
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
@@ -16,9 +16,9 @@ import androidx.compose.ui.test.performTextInput
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.jonathansniderlogintesting.layout.HomeScreen
-import com.example.jonathansniderlogintesting.layout.LoginScreen
-import com.example.jonathansniderlogintesting.layout.RegisterScreen
+import build.learning.jonathansniderlogintesting.layout.HomeScreen
+import build.learning.jonathansniderlogintesting.layout.LoginScreen
+import build.learning.jonathansniderlogintesting.layout.RegisterScreen
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import junit.framework.TestCase.assertTrue
@@ -51,8 +51,6 @@ class LoginScreenTests {
         @JvmStatic //because JUnit was originally a Java framework, this annotation
         //helps JUnit recognize this function as a static method to run
         fun setUpOnce(){
-            println("Doing initial setup")
-
         }
 
         @AfterClass//runs after all classes in the test are done. Much like
@@ -216,7 +214,12 @@ class LoginScreenTests {
         //wait for a bit to give authentication time to occur,
         //then test to see if we successfully navigated to the home screen page
         //(has nothing on it but a text box saying 'hello')
-        composeTestRule.waitUntil(10000) {
+
+           /* composeTestRule.onNodeWithText("hello", ignoreCase = true)
+                .isDisplayed()*/
+
+
+        composeTestRule.waitUntil(2000) {
             composeTestRule.onNodeWithText("hello", ignoreCase = true)
                 .isDisplayed()
         }

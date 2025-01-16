@@ -1,4 +1,4 @@
-package com.example.jonathansniderlogintesting
+package build.learning.jonathansniderlogintesting
 
 import org.junit.Test
 

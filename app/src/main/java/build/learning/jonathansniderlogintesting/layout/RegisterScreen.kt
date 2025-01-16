@@ -1,17 +1,16 @@
-package com.example.jonathansniderlogintesting.layout
+package build.learning.jonathansniderlogintesting.layout
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,20 +26,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.jonathansniderlogintesting.R
+import build.learning.jonathansniderlogintesting.R
 import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     auth: FirebaseAuth,
-    navigateToRegister: () -> Unit,
-    navigateToHomeScreen: () -> Unit
+    navigateToLogin: () -> Unit
 ) {
-
     val context = LocalContext.current
     Column(
 
@@ -48,16 +44,7 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-    )
-
-    {
-        Image(
-            painter = painterResource(id = R.drawable.old_national_logo),
-            contentDescription = null,
-            Modifier
-                .size(150.dp)
-                .padding(20.dp)
-        )
+    ) {
         Surface(
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.surfaceVariant,
@@ -65,13 +52,12 @@ fun LoginScreen(
                 5.dp,
                 MaterialTheme.colorScheme.secondary,
                 shape = MaterialTheme.shapes.medium
-            ),
-
-            ) {
+            )
+        ) {
             Column(
             ) {
-                //email field
-                var emailText by remember { mutableStateOf("") }
+                //new email field
+                var newEmailText by remember { mutableStateOf("") }
                 OutlinedTextField(
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedTextColor = MaterialTheme.colorScheme.primary,
@@ -81,18 +67,18 @@ fun LoginScreen(
                     ),
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Default.MailOutline,
+                            imageVector = Icons.Default.Add,
                             contentDescription = null
                         )
                     },
-                    value = emailText,
-                    onValueChange = { emailText = it },
-                    label = { Text(stringResource(R.string.email_text_field)) },
+                    value = newEmailText,
+                    onValueChange = { newEmailText = it },
+                    label = { Text(stringResource(R.string.register_email_text_field)) },
                     modifier = Modifier.padding(10.dp)
 
                 )
-                //password field
-                var passwordText by remember { mutableStateOf("") }
+                //new password field
+                var newPasswordText by remember { mutableStateOf("") }
                 OutlinedTextField(
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedTextColor = MaterialTheme.colorScheme.primary,
@@ -102,31 +88,30 @@ fun LoginScreen(
                     ),
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Default.Lock,
+                            imageVector = Icons.Default.Add,
                             contentDescription = null
                         )
                     },
-                    value = passwordText,
-                    onValueChange = { passwordText = it },
-                    label = { Text(stringResource(R.string.password_text_field)) },
+                    value = newPasswordText,
+                    onValueChange = { newPasswordText = it },
+                    label = { Text(stringResource(R.string.register_password_text_field)) },
                     modifier = Modifier.padding(10.dp)
 
                 )
-                //login button, move to home screen after SUCCESSFUL login
+                //register button, move back to login after SUCCESSFUL register
                 var enabledState by remember { mutableStateOf(true) }
-                if (emailText.isEmpty() || passwordText.isEmpty()) {
+                if (newEmailText.isEmpty() || newPasswordText.isEmpty()) {
                     enabledState = false
                 } else {
                     enabledState = true
                 }
                 Button(
                     onClick = {
-                        verifyFirebaseUser(
-                            emailText,
-                            passwordText,
-                            auth,
-                            context,
-                            navigateToHomeScreen
+                        createNewFirebaseUser(
+                            newEmailText, newPasswordText,
+                            auth = auth,
+                            context = context,
+                            navigateToLogin = navigateToLogin
                         )
                     },
                     enabled = enabledState,
@@ -134,53 +119,41 @@ fun LoginScreen(
                         .padding(20.dp)
                         .align(Alignment.CenterHorizontally)
                 ) {
-                    Text(text = stringResource(R.string.login_button))
-                }
-
-                //register button, move to register screen
-                Button(
-                    onClick = {
-                        Toast.makeText(context, "hit the register button", Toast.LENGTH_SHORT)
-                            .show()
-                        navigateToRegister()
-
-                    },
-                    modifier = Modifier
-                        .padding(20.dp)
-                        .align(Alignment.CenterHorizontally)
-                ) {
                     Text(text = stringResource(R.string.register_button))
                 }
+
+
             }
         }
     }
 }
 
-
-private fun verifyFirebaseUser(
-    email: String,
-    password: String,
+private fun createNewFirebaseUser(
+    newEmail: String,
+    newPassword: String,
     auth: FirebaseAuth,
     context: Context,
-    navigateToHomeScreen: () -> Unit
+    navigateToLogin: () -> Unit
 ) {
-    auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-        if (task.isSuccessful) {
-            val user = auth.currentUser
-            Toast.makeText(context, "Good Login by ${user?.email}", Toast.LENGTH_LONG).show()
-            //navigate to home screen
-            navigateToHomeScreen()
+    auth.createUserWithEmailAndPassword(newEmail, newPassword)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Sign in success, update UI with the signed-in user's information
+                Log.d(TAG, "createUserWithEmail:success")
+                val user = auth.currentUser
+                Toast.makeText(context, "New Account by ${user?.email}", Toast.LENGTH_LONG)
+                    .show()
+                auth.signOut()
+                //move back to login page
+                navigateToLogin()
 
-        } else {
-            Toast.makeText(context, "Bad Login: ${task.exception?.message}", Toast.LENGTH_LONG)
-                .show()
+            } else {
+                // If sign in fails, display a message to the user.
+                Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                Toast.makeText(
+                    context, "Authentication failed.", Toast.LENGTH_SHORT,
+                ).show()
+            }
         }
-    }
 }
-
-
-
-
-
-
 

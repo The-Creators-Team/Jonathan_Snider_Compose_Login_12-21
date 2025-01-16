@@ -1,4 +1,4 @@
-package com.example.jonathansniderlogintesting
+package build.learning.jonathansniderlogintesting
 
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
@@ -15,8 +15,8 @@ import androidx.compose.ui.test.performTextInput
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.jonathansniderlogintesting.layout.LoginScreen
-import com.example.jonathansniderlogintesting.layout.RegisterScreen
+import build.learning.jonathansniderlogintesting.layout.LoginScreen
+import build.learning.jonathansniderlogintesting.layout.RegisterScreen
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import junit.framework.TestCase.assertTrue

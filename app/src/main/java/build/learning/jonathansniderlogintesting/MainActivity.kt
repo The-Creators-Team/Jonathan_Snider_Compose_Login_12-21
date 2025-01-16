@@ -1,4 +1,4 @@
-package com.example.jonathansniderlogintesting
+package build.learning.jonathansniderlogintesting
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.jonathansniderlogintesting.layout.HomeScreen
-import com.example.jonathansniderlogintesting.layout.LoginScreen
-import com.example.jonathansniderlogintesting.layout.RegisterScreen
-import com.example.jonathansniderlogintesting.ui.theme.JonathanSniderLoginTestingTheme
+import build.learning.jonathansniderlogintesting.layout.HomeScreen
+import build.learning.jonathansniderlogintesting.layout.LoginScreen
+import build.learning.jonathansniderlogintesting.layout.RegisterScreen
+import build.learning.jonathansniderlogintesting.ui.theme.JonathanSniderLoginTestingTheme
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -30,14 +30,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         //setting the content for the home page
         auth = Firebase.auth
-
         setContent {
             JonathanSniderLoginTestingTheme {
                 //creating (and remembering) the navController
-                //STATE HOIST THIS (HOWEVER THAT WORKS)
                 val navController = rememberNavController()
 
-                val loginAuth by remember { mutableStateOf(auth) }
+                val loginAuth by remember { mutableStateOf(Firebase.auth) }
                 NavHost(
                     navController = navController,
                     startDestination = LoginScreenRoute,
@@ -45,14 +43,14 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //these K classes can be seen as routes and with the composable
                     //the applications will start at the one given as the start destination above,
-                    // and by using the 'navController.navigate' button and giving a route as
+                    // and by using the 'navController.navigate' method and giving a route as
                     //an argument, its possible to move in between screens
                     composable<LoginScreenRoute> {
 
                         LoginScreen(loginAuth,
                             navigateToRegister = { navController.navigate(RegisterScreenRoute) },
-                            navigateToHomeScreen = {navController.navigate(HomeScreenRoute)}
-                            )
+                            navigateToHomeScreen = { navController.navigate(HomeScreenRoute) }
+                        )
                     }
                     /*composable<ScreenB> {
                         val args=it.toRoute<ScreenB>()
@@ -70,7 +68,8 @@ class MainActivity : ComponentActivity() {
                     }
                     composable<RegisterScreenRoute> {
                         RegisterScreen(loginAuth,
-                            navigateToLogin = {navController.navigate(LoginScreenRoute)})
+                            navigateToLogin = { navController.navigate(LoginScreenRoute) }
+                        )
                     }
                 }
             }

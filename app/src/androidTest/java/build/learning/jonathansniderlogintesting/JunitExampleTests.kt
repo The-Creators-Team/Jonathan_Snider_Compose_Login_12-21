@@ -1,4 +1,4 @@
-package com.example.jonathansniderlogintesting
+package build.learning.jonathansniderlogintesting
 
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue

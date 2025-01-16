@@ -8,16 +8,16 @@
       <SelectionState runConfigName="loginScreen_successfulLogin()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="registerScreen_successfulStart()">
+      <SelectionState runConfigName="loginScreen_successfulStart()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="registerScreen_emptyText()">
+      <SelectionState runConfigName="loginScreen_emptyText()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="register_successfulRegister()">
+      <SelectionState runConfigName="loginScreen_successfulNavigateRegister()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="JunitExampleTests">
+      <SelectionState runConfigName="Tests in 'com.example.jonathansniderlogintesting'">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

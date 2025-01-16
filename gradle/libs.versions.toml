@@ -13,6 +13,7 @@ composeNavigation = "2.8.0-alpha08"
 serialization = "1.6.3"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.1.0"
+retrofitVersion = "2.11.0"
 
 
 [libraries]
@@ -38,6 +39,8 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
+retrofit-converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

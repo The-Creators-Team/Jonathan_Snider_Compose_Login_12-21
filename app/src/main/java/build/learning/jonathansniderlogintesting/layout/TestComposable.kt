@@ -1,4 +1,4 @@
-package com.example.jonathansniderlogintesting.layout
+package build.learning.jonathansniderlogintesting.layout
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

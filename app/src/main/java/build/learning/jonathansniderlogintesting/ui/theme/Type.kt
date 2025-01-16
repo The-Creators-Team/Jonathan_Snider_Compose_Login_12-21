@@ -1,4 +1,4 @@
-package com.example.jonathansniderlogintesting.ui.theme
+package build.learning.jonathansniderlogintesting.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.example.jonathansniderlogintesting.ui.theme
+package build.learning.jonathansniderlogintesting.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
