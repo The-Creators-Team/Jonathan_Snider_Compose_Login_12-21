@@ -132,6 +132,7 @@ class LoginScreenTests {
         }
 
         // Find the email TextField and perform text input
+        //adding change just to test
         composeTestRule.onNodeWithText("email", ignoreCase = true)
             .performTextInput(email)
         // Find the password TextField and perform text input
